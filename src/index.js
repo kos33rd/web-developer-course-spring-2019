@@ -1,16 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-const MyFirstComponent = function (props) {
-  return (
-    <div>
-      <h1>{props.title}</h1>
-      <span>I'm just common HTML</span>
-    </div>
-  )
-};
+import { MySecondComponent } from "./my-second-component"
+
+const colors = [
+    'red',
+    'blue',
+    'yellow'
+]
 
 ReactDOM.render(
-  <MyFirstComponent title="Hello from React!"/>,
-  document.getElementById('app')
+    <div>
+        {colors.map((color, idx) =>
+            <MySecondComponent
+                initialCount={idx + 100}
+                key={color}
+                color={color}
+            />
+        )}
+    </div>,
+    document.getElementById('app')
 );
