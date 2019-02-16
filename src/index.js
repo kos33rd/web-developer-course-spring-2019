@@ -1,23 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { MySecondComponent } from "./my-second-component"
-
-const colors = [
-    'red',
-    'blue',
-    'yellow'
-]
+import { CharactersList } from "./characters-list"
 
 ReactDOM.render(
-    <div>
-        {colors.map((color, idx) =>
-            <MySecondComponent
-                initialCount={idx + 100}
-                key={color}
-                color={color}
-            />
-        )}
-    </div>,
+    <CharactersList/>,
     document.getElementById('app')
 );
