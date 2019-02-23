@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 
 import style from './character-card.css'
 
-export const CharacterCard = ({ character }) => (
+export const CharacterCard = ({ character, handleDetailsClick }) => (
     <Grid item sm={6} md={4} lg={3}>
         <Card className={style.card}>
             <CardMedia
@@ -26,7 +26,7 @@ export const CharacterCard = ({ character }) => (
                 </Typography>
             </CardContent>
             <CardActions  className={style.bg}>
-                <Button size="small" color="primary">
+                <Button size="small" color="primary" onClick={handleDetailsClick}>
                     <span className={'class-name'}>Details</span>
                 </Button>
             </CardActions>

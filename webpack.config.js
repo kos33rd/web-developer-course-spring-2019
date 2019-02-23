@@ -15,6 +15,7 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, outputDirectory),
+    publicPath: '/',
     filename: "[name].js"
   },
   module: {
@@ -52,6 +53,7 @@ module.exports = {
   devServer: {
     contentBase: outputDirectory,
     compress: true,
+    historyApiFallback: true,
     port: 9000
   }
 };
