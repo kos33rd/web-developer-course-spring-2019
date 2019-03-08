@@ -1,8 +1,10 @@
 import React from "react"
 import axios from 'axios'
-import Grid from '@material-ui/core/Grid'
+import { Grid } from '../../components/grid/grid'
 
 import { CharacterCard } from "./character-card"
+
+import style from './character-list.css'
 
 export class CharactersList extends React.Component {
 
@@ -48,7 +50,8 @@ export class CharactersList extends React.Component {
 
         return (
             <div>
-                <Grid container spacing={16}>
+                <h3 className={style.title}>Now with <span className={style.rainbow}>flexbox</span></h3>
+                <Grid container>
                     {this.state.characters.map((character) =>
                         <CharacterCard
                             key={character.id}
