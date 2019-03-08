@@ -1,4 +1,3 @@
-import style from "./pages/list/characters-list.css"
 import React from "react"
 import Paper from "@material-ui/core/Paper"
 import InputBase from "@material-ui/core/InputBase"
@@ -6,6 +5,9 @@ import Typography from "@material-ui/core/Typography"
 import Toolbar from "@material-ui/core/Toolbar"
 import AppBar from "@material-ui/core/AppBar"
 import { withRouter } from "react-router-dom"
+
+import style from "./characters-app-bar.css"
+
 
 class CharactersAppBar extends React.Component {
     state = {
