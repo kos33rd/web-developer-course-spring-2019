@@ -49,7 +49,7 @@ export class CharactersList extends React.Component {
         }
 
         return (
-            <div>
+            <div className={style.body}>
                 <h3 className={style.title}>Now with <span className={style.rainbow}>flexbox</span></h3>
                 <Grid container>
                     {this.state.characters.map((character) =>

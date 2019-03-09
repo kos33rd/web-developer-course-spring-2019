@@ -26,7 +26,7 @@ class CharactersAppBar extends React.Component {
             <AppBar position="static">
                 <Toolbar className={style.toolbar}>
                     <Typography variant="h6" color="inherit" noWrap className={style.title}>
-                        Rick and Morty persons
+                        Rick and Morty characters
                     </Typography>
                     <Paper elevation={1} className={style.search}>
                         <InputBase value={this.state.searchQuery} onChange={this.handleChange}/>

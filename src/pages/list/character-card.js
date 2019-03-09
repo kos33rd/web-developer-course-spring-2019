@@ -10,7 +10,7 @@ import { Grid } from '../../components/grid/grid';
 import style from './character-card.css'
 
 export const CharacterCard = ({ character, handleDetailsClick }) => (
-    <Grid item sm={6} md={4} lg={4}>
+    <Grid item sm={6} md={4} lg={3}>
         <Card className={style.card}>
             <CardMedia
                 className={style.media}

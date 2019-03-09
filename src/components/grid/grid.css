@@ -21,12 +21,11 @@
 }
 
 .item-lg-3 {
-    flex-basis: calc(3/12 * 100%);
+    flex-basis: calc(3/12 * 100% - 8px);
 }
 
 .item-lg-4 {
     flex-basis: calc(4/12 * 100% - 8px);
-    max-width: calc(4/12 * 100% - 8px);
 }
 
 .item-lg-6 {
