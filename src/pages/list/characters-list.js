@@ -3,17 +3,22 @@ import axios from 'axios'
 import { Grid } from '../../components/grid/grid'
 
 import { CharacterCard } from "./character-card"
+import * as store from '../../store'
 
 import style from './character-list.css'
 
 export class CharactersList extends React.Component {
 
-    state = { }
+    state = {
+        characters: store.getState()
+    }
 
     getQuery = (props) => props.location.pathname.replace('/characters', '').replace('/', '')
 
     componentDidMount() {
-        this.loadCharacters(this.getQuery(this.props))
+        if(this.state.characters.length < 1) {
+            this.loadCharacters(this.getQuery(this.props))
+        }
     }
 
     loadCharacters = (name = '') => {
@@ -22,6 +27,8 @@ export class CharactersList extends React.Component {
         axios.get(`https://rickandmortyapi.com/api/character/${searchQuery}`)
             .then(response => {
                 this.setState({ characters: response.data.results })
+                const action = store.charactersListLoaded(response.data.results)
+                store.dispatch(action)
             })
             .catch((err) => {
                 this.setState({
@@ -39,7 +46,6 @@ export class CharactersList extends React.Component {
     }
 
     render() {
-
         if (this.state.error) {
             return <h3>{this.state.error}</h3>
         }
