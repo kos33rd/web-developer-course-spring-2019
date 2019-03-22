@@ -3,9 +3,10 @@ import axios from 'axios'
 import { Grid } from '../../components/grid/grid'
 
 import { CharacterCard } from "./character-card"
-import * as store from '../../store'
+import { store } from '../../redux/store'
 
 import style from './character-list.css'
+import * as actions from "../../redux/actions"
 
 export class CharactersList extends React.Component {
 
@@ -27,7 +28,7 @@ export class CharactersList extends React.Component {
         axios.get(`https://rickandmortyapi.com/api/character/${searchQuery}`)
             .then(response => {
                 this.setState({ characters: response.data.results })
-                const action = store.charactersListLoaded(response.data.results)
+                const action = actions.charactersListLoaded(response.data.results)
                 store.dispatch(action)
             })
             .catch((err) => {

@@ -7,7 +7,7 @@ import AppBar from "@material-ui/core/AppBar"
 import { withRouter } from "react-router-dom"
 
 import style from "./characters-app-bar.css"
-import * as store from "./store"
+import { store } from "./redux/store"
 
 
 class CharactersAppBar extends React.Component {
@@ -18,7 +18,9 @@ class CharactersAppBar extends React.Component {
     }
 
     reactToStoreUpdate = (characters) => {
-        this.setState({ characters })
+        console.log('Reacted', store.getState())
+
+        this.setState({ characters: store.getState() })
     }
 
     state = {
