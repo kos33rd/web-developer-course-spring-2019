@@ -1,11 +1,24 @@
 
-const initialState = []
+const initialState = {
+    characters: [],
+    charactersLoadingFailed: false
+}
 
 export const reducer = (oldStore = initialState, action) => {
 
     console.log('Reducer called with action', action)
     if(action.type === 'CHARACTERS_LIST_LOADED') {
-        return action.characters
+        return {
+            characters: action.characters,
+            charactersLoadingFailed: false
+        }
+    }
+
+    if(action.type === 'CHARACTERS_LIST_LOAD_FAILED') {
+        return {
+            characters: [],
+            charactersLoadingFailed: true
+        }
     }
 
     return oldStore

@@ -5,28 +5,12 @@ import Typography from "@material-ui/core/Typography"
 import Toolbar from "@material-ui/core/Toolbar"
 import AppBar from "@material-ui/core/AppBar"
 import { withRouter } from "react-router-dom"
+import { connect } from 'react-redux'
 
 import style from "./characters-app-bar.css"
-import { store } from "./redux/store"
 
 
-class CharactersAppBar extends React.Component {
-
-    constructor(props) {
-        super(props)
-        store.subscribe(this.reactToStoreUpdate)
-    }
-
-    reactToStoreUpdate = (characters) => {
-        console.log('Reacted', store.getState())
-
-        this.setState({ characters: store.getState() })
-    }
-
-    state = {
-        searchQuery: this.props.location.pathname.replace('/characters', '').replace('/', ''),
-        characters: []
-    }
+class DumbCharactersAppBar extends React.Component {
 
     handleChange = (event) => {
         this.setState({
@@ -35,9 +19,13 @@ class CharactersAppBar extends React.Component {
         this.props.history.replace(`/characters/${event.target.value}`)
     }
 
+    state = {
+        searchQuery: this.props.location.pathname.replace('/characters', '').replace('/', '')
+    }
+
     render() {
-        console.log('Rendered with state', this.state)
-        const charactersCount = this.state.characters.length
+        console.log('Rendered with redux data', this.props.operationsCountFromRedux)
+        const charactersCount = this.props.operationsCountFromRedux
         return (
             <AppBar position="static">
                 <Toolbar className={style.toolbar}>
@@ -53,4 +41,8 @@ class CharactersAppBar extends React.Component {
     }
 }
 
-export default withRouter(CharactersAppBar)
+const mapStateToProps = (state) => ({
+    operationsCountFromRedux: state.characters.length
+})
+
+export default connect(mapStateToProps)(withRouter(DumbCharactersAppBar))

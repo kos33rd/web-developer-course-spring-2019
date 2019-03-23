@@ -5,3 +5,6 @@ export const charactersListLoaded = (characters) => ({
     characters
 })
 
+export const charactersListLoadFailed = () => ({
+    type: 'CHARACTERS_LIST_LOAD_FAILED'
+})

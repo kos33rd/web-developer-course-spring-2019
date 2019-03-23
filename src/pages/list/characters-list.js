@@ -3,38 +3,29 @@ import axios from 'axios'
 import { Grid } from '../../components/grid/grid'
 
 import { CharacterCard } from "./character-card"
-import { store } from '../../redux/store'
 
 import style from './character-list.css'
-import * as actions from "../../redux/actions"
+import * as actionCreators from "../../redux/actionCreators"
+import { connect } from "react-redux"
 
-export class CharactersList extends React.Component {
-
-    state = {
-        characters: store.getState()
-    }
+class CharactersList extends React.Component {
 
     getQuery = (props) => props.location.pathname.replace('/characters', '').replace('/', '')
 
     componentDidMount() {
-        if(this.state.characters.length < 1) {
+        if(this.props.characters.length < 1) {
             this.loadCharacters(this.getQuery(this.props))
         }
     }
 
     loadCharacters = (name = '') => {
         const searchQuery = name ? `?name=${name}` : ''
-        this.setState({ error: void 0 })
         axios.get(`https://rickandmortyapi.com/api/character/${searchQuery}`)
             .then(response => {
-                this.setState({ characters: response.data.results })
-                const action = actions.charactersListLoaded(response.data.results)
-                store.dispatch(action)
+                this.props.charactersListLoaded(response.data.results)
             })
             .catch((err) => {
-                this.setState({
-                    error: 'No results from API'
-                })
+                this.props.charactersListLoadFailed()
             })
     }
 
@@ -43,23 +34,21 @@ export class CharactersList extends React.Component {
     }
 
     componentWillReceiveProps(nextProps, nextContext) {
-        this.loadCharacters(this.getQuery(nextProps))
+        if(nextProps.location.pathname !== this.props.location.pathname) {
+            this.loadCharacters(this.getQuery(nextProps))
+        }
     }
 
     render() {
-        if (this.state.error) {
-            return <h3>{this.state.error}</h3>
-        }
-
-        if (!this.state.characters) {
-            return <h1>Loading...</h1>
+        if (this.props.loadFailed) {
+            return <h3>Error loading data from API</h3>
         }
 
         return (
             <div className={style.body}>
                 <h3 className={style.title}>Now with <span className={style.rainbow}>flexbox</span></h3>
                 <Grid container>
-                    {this.state.characters.map((character) =>
+                    {this.props.characters.map((character) =>
                         <CharacterCard
                             key={character.id}
                             character={character}
@@ -71,3 +60,19 @@ export class CharactersList extends React.Component {
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+    characters: state.characters,
+    loadFailed: state.charactersLoadingFailed
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    charactersListLoaded: (characters) => {
+        dispatch(actionCreators.charactersListLoaded(characters))
+    },
+    charactersListLoadFailed: () => {
+        dispatch(actionCreators.charactersListLoadFailed())
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(CharactersList)
