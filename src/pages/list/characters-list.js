@@ -1,12 +1,12 @@
 import React from "react"
-import axios from 'axios'
 import { Grid } from '../../components/grid/grid'
 
 import { CharacterCard } from "./character-card"
 
 import style from './character-list.css'
-import * as actionCreators from "../../redux/actionCreators"
 import { connect } from "react-redux"
+import { loadCharactersActionCreator } from "../../redux/actionCreators/loadCharacters"
+
 
 class CharactersList extends React.Component {
 
@@ -14,19 +14,8 @@ class CharactersList extends React.Component {
 
     componentDidMount() {
         if(this.props.characters.length < 1) {
-            this.loadCharacters(this.getQuery(this.props))
+            this.props.loadCharacters(this.getQuery(this.props))
         }
-    }
-
-    loadCharacters = (name = '') => {
-        const searchQuery = name ? `?name=${name}` : ''
-        axios.get(`https://rickandmortyapi.com/api/character/${searchQuery}`)
-            .then(response => {
-                this.props.charactersListLoaded(response.data.results)
-            })
-            .catch((err) => {
-                this.props.charactersListLoadFailed()
-            })
     }
 
     buildDetailsClickHandler = (character) => () => {
@@ -35,7 +24,7 @@ class CharactersList extends React.Component {
 
     componentWillReceiveProps(nextProps, nextContext) {
         if(nextProps.location.pathname !== this.props.location.pathname) {
-            this.loadCharacters(this.getQuery(nextProps))
+            this.props.loadCharacters(this.getQuery(nextProps))
         }
     }
 
@@ -67,12 +56,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-    charactersListLoaded: (characters) => {
-        dispatch(actionCreators.charactersListLoaded(characters))
-    },
-    charactersListLoadFailed: () => {
-        dispatch(actionCreators.charactersListLoadFailed())
-    }
+    loadCharacters: (query) => dispatch(loadCharactersActionCreator(query))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(CharactersList)
