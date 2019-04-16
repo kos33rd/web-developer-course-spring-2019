@@ -1,12 +1,10 @@
 import axios from "axios"
 import * as actionCreators from "./index"
-import { getFormValues } from "redux-form"
 
 
-export const loadCharactersActionCreator = (values = {}) => (dispatch, getState) => {
+export const loadCharactersActionCreator = (values = {}) => (dispatch) => {
     const { query, aliveOnly } = values
-    const formValues = getFormValues('search')(getState())
-    console.log('State', formValues)
+
     const queryParams = []
 
     if (query) {

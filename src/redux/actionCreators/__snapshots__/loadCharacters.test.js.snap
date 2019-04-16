@@ -2,7 +2,11 @@
 
 exports[`action loadCharactersActionCreator works fine 1`] = `
 Object {
-  "characters": Array [],
+  "characters": Array [
+    Object {
+      "test": "character",
+    },
+  ],
   "type": "CHARACTERS_LIST_LOADED",
 }
 `;

@@ -27,22 +27,31 @@ describe('action loadCharactersActionCreator', () => {
 
     })
 
-    it('tests moxios', () => {
+    it('tests moxios', (done) => {
 
         let onFulfilled = jest.fn()
+
+        moxios.stubRequest('/say/hello', {
+            status: 200,
+            responseText: 'hello'
+        })
+
         axios.get('/say/hello').then(onFulfilled)
 
         moxios.wait(function () {
             expect(onFulfilled).toBeCalled()
+            console.log('Kekeke')
             done()
         })
     })
 
-    xit('works fine', () => {
+    it('works fine', (done) => {
 
         moxios.stubRequest('https://rickandmortyapi.com/api/character/', {
             status: 200,
-            responseText: 'hello'
+            responseText: {
+                results: [{ test: 'character' }]
+            }
         })
 
         const dispatcher = loadCharactersActionCreator()
@@ -52,10 +61,9 @@ describe('action loadCharactersActionCreator', () => {
 
         moxios.wait(function () {
             const req = moxios.requests.mostRecent()
-            console.log('Req', req)
-
             expect(dispatch).toBeCalledTimes(1)
             expect(dispatch.mock.calls[0][0]).toMatchSnapshot()
+            done()
         })
     })
 
