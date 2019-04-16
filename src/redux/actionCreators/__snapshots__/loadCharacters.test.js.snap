@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`action loadCharactersActionCreator works fine 1`] = `
+Object {
+  "characters": Array [],
+  "type": "CHARACTERS_LIST_LOADED",
+}
+`;

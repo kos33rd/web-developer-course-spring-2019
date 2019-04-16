@@ -1,8 +1,24 @@
 import axios from "axios"
 import * as actionCreators from "./index"
+import { getFormValues } from "redux-form"
 
-export const loadCharactersActionCreator = (query) => (dispatch, getState) => {
-    const searchQuery = query ? `?name=${query}` : ''
+
+export const loadCharactersActionCreator = (values = {}) => (dispatch, getState) => {
+    const { query, aliveOnly } = values
+    const formValues = getFormValues('search')(getState())
+    console.log('State', formValues)
+    const queryParams = []
+
+    if (query) {
+        queryParams.push(`name=${query}`)
+    }
+
+    if (aliveOnly) {
+        queryParams.push('status=alive')
+    }
+
+    const searchQuery = queryParams.length > 0 ? `?${queryParams.join('&')}` : ''
+
     axios.get(`https://rickandmortyapi.com/api/character/${searchQuery}`)
         .then(response => {
             dispatch(actionCreators.charactersListLoaded(response.data.results))

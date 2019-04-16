@@ -11,8 +11,9 @@ describe('CharactersList', () => {
     it('test render empty component', () => {
         const mockStore = createStore([thunk])
         const initialState = {
-            characters: []
-
+            app: {
+                characters: []
+            }
         }
         const store = mockStore(initialState)
 

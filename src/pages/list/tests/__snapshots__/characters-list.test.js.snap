@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CharactersList test render empty component 1`] = `
+<div
+  className="body"
+>
+  <h3
+    className="title"
+  >
+    Now with 
+    <span
+      className="rainbow"
+    >
+      flexbox
+    </span>
+  </h3>
+  <div
+    className="container row"
+  />
+</div>
+`;

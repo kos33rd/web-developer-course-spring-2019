@@ -51,8 +51,8 @@ class CharactersList extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    characters: state.characters,
-    loadFailed: state.charactersLoadingFailed
+    characters: state.app.characters,
+    loadFailed: state.app.charactersLoadingFailed
 })
 
 const mapDispatchToProps = (dispatch) => ({
